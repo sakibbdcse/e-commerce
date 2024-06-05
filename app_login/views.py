@@ -5,13 +5,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from app_login.models import Profile
 from app_login.forms import ProfileForms, SignUpForm
-
+from django.contrib import messages
 def sign_up(request):
     form = SignUpForm()
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request,'User Account Created Successfully!')
             return HttpResponseRedirect(reverse('login'))
     return render(request, 'app_login/sign_up.html', context={'form': form})
 
@@ -32,6 +33,7 @@ def login_user(request):
 @login_required
 def logout_user(request):
     logout(request)
+    messages.warning(request, 'You are succesfully Logout..!')
     return HttpResponseRedirect(reverse('login'))
 
 @login_required
@@ -42,5 +44,6 @@ def user_profile(request):
         form = ProfileForms(request.POST, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Profile Update Successfully..!')
             form = ProfileForms(instance=profile)
     return render(request, 'app_login/change_profile.html', context={'form': form})
