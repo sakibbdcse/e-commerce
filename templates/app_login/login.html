@@ -5,10 +5,10 @@
 {% block body_block %}
 <h3>Log in</h3>
 <form method="POST">
-    {{form|crispy}}
     {% csrf_token %}
+    {{ form|crispy }}
     <button type="submit" class="btn btn-success btn-sm">Login</button>
     <br>
-    <p>Dotn't have any account?  <a href="signup">SignUP</a> Here</p>
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a> here</p>
 </form>
-{% endblock  %}
+{% endblock %}
