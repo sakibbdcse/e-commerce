@@ -33,6 +33,11 @@ INSTALLED_APPS = [
 # crispy teamplate
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# coustom register user model
+
+AUTH_USER_MODEL = 'app_login.User'
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
