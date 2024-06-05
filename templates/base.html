@@ -12,6 +12,18 @@
 </head>
 <body>
     <div class="container">
+
+        <div class="conatiner messages mt-2">
+            {% if messages %}
+            {% for message in messages %}
+            <div {% if message.tags %} class="alert alert-{{message.tags}}{% endif %}" role="alert">
+                {{message}}
+                <button type="button" class="close" date-dismiss="alert" aria-level="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">My Site</a>
             <div class="collapse navbar-collapse" id="navbarNav">
