@@ -77,7 +77,7 @@ class Profile(models.Model):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user + "'s profile"
+        return self.username + "'s profile "
     
     def is_fully_fieled(self):
         fields_names = [f.name for f in self._meta.get_fields()]
