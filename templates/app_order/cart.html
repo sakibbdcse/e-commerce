@@ -20,7 +20,11 @@
                 {% for item in order.orderitems.all %}
                     <tr>
                         <td>{{ item.item.name }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>
+                            <a href="{% url 'decrease_cart' item.item.id %}" class="btn btn-warning btn-sm">-</a>
+                            {{ item.quantity }}
+                            <a href="{% url 'increase_cart' item.item.id %}" class="btn btn-success btn-sm">+</a>
+                        </td>
                         <td>${{ item.item.price }}</td>
                         <td>${{ item.get_total }}</td>
                         <td>

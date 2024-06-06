@@ -50,3 +50,44 @@ def add_to_cart(request, pk):
         order.orderitems.add(order_item)
         messages.info(request, 'This item was added to your cart')
     return redirect('home')
+
+@login_required
+def increase_cart(request, pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.orderitems.filter(item=item).exists():
+            order_item = Cart.objects.filter(item=item, user=request.user, purchased=False)[0]
+            order_item.quantity += 1
+            order_item.save()
+            messages.info(request, f"{item.name} quantity has been updated")
+        else:
+            messages.info(request, f"{item.name} is not in your cart")
+            return redirect('home')
+    else:
+        messages.info(request, "You don't have an active order")
+    return redirect('view_cart')
+
+@login_required
+def decrease_cart(request, pk):
+    item = get_object_or_404(Product, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.orderitems.filter(item=item).exists():
+            order_item = Cart.objects.filter(item=item, user=request.user, purchased=False)[0]
+            if order_item.quantity > 1:
+                order_item.quantity -= 1
+                order_item.save()
+                messages.info(request, f"{item.name} quantity has been updated")
+            else:
+                order.orderitems.remove(order_item)
+                order_item.delete()
+                messages.info(request, f"{item.name} has been removed from your cart")
+        else:
+            messages.info(request, f"{item.name} is not in your cart")
+            return redirect('home')
+    else:
+        messages.info(request, "You don't have an active order")
+    return redirect('view_cart')
