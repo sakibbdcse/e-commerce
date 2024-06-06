@@ -14,7 +14,7 @@
             <p>{{ product.details_text }}</p>
             <p class="text-danger">${{ product.price }}</p>
             <p class="text-muted"><s>${{ product.old_price }}</s></p>
-            <a href="{% url 'add-to-cart' product.pk %}" class="btn btn-primary">Add to Cart</a>
+            <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">Add to Cart</a>
         </div>
     </div>
 </div>
