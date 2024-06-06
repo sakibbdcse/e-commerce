@@ -6,15 +6,14 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <img src="{{ product.mainimage.url }}" class="img-fluid" alt="{{ product.name }}">
+            <img src="{{ object.mainimage.url }}" class="img-fluid" alt="{{ object.name }}">
         </div>
         <div class="col-md-6">
-            <h1>{{ product.name }}</h1>
-            <p class="text-muted">{{ product.preview_text }}</p>
-            <p>{{ product.details_text }}</p>
-            <p class="text-danger">${{ product.price }}</p>
-            <p class="text-muted"><s>${{ product.old_price }}</s></p>
-            <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-primary">Add to Cart</a>
+            <h1>{{ object.name }}</h1>
+            <p>{{ object.details_text }}</p>
+            <p class="text-muted"><s>${{ object.old_price }}</s></p>
+            <p class="text-danger">${{ object.price }}</p>
+            <a href="{% url 'add_to_cart' object.pk %}" class="btn btn-success">Add to Cart</a>
         </div>
     </div>
 </div>

@@ -5,6 +5,32 @@ from app_order.models import Cart, Order
 from app_shop.models import Product
 
 @login_required
+def view_cart(request):
+    order = Order.objects.filter(user=request.user, ordered=False).first()
+    context = {
+        'order': order
+    }
+    return render(request, 'app_order/cart.html', context)
+
+@login_required
+def remove_from_cart(request, pk):
+    item = get_object_or_404(Cart, id=pk, user=request.user, purchased=False)
+    item.delete()
+    messages.info(request, 'Item removed from cart')
+    return redirect('view_cart')
+
+@login_required
+def checkout(request):
+    order = Order.objects.filter(user=request.user, ordered=False).first()
+    if order:
+        order.ordered = True
+        order.save()
+        messages.success(request, 'Order placed successfully!')
+        return redirect('home')
+    messages.warning(request, 'No items in your cart to checkout')
+    return redirect('view_cart')
+
+@login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Product, pk=pk)
     order_item, created = Cart.objects.get_or_create(item=item, user=request.user, purchased=False)
@@ -24,11 +50,3 @@ def add_to_cart(request, pk):
         order.orderitems.add(order_item)
         messages.info(request, 'This item was added to your cart')
     return redirect('home')
-
-@login_required
-def cart_view(request):
-    cart_items = Cart.objects.filter(user=request.user, purchased=False)
-    context = {
-        'cart_items': cart_items
-    }
-    return render(request, 'app_order/cart.html', context)

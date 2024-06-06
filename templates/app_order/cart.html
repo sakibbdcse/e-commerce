@@ -5,19 +5,46 @@
 {% block body_block %}
 <div class="container mt-5">
     <h1>Your Cart</h1>
-    <div class="row">
-        {% for item in cart_items %}
-            <div class="col-12 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.item.name }}</h5>
-                        <p class="card-text">Quantity: {{ item.quantity }}</p>
-                        <p class="card-text">Price: ${{ item.item.price }}</p>
-                        <p class="card-text">Total: ${{ item.get_total }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if order %}
+                {% for item in order.orderitems.all %}
+                    <tr>
+                        <td>{{ item.item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.item.price }}</td>
+                        <td>${{ item.get_total }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" class="text-right">Total</td>
+                    <td>${{ order.get_totals }}</td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No items in your cart</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Continue Shopping</a>
+        {% if order %}
+            <a href="{% url 'checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
