@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+
+{% block title_block %}Home{% endblock %}
+
+{% block body_block %}
+<h1>Product List</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            <img src="{{ product.mainimage.url }}" alt="{{ product.name }}">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.preview_text }}</p>
+            <p>Price: {{ product.price }}</p>
+            <p>Old Price: {{ product.old_price }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

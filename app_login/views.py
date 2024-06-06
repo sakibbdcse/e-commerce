@@ -26,7 +26,7 @@ def login_user(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                next_url = request.GET.get('next', reverse('profile'))
+                next_url = request.GET.get('next', reverse('home'))
                 return HttpResponseRedirect(next_url)
     return render(request, 'app_login/login.html', context={'form': form})
 
