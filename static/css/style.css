@@ -42,3 +42,16 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.navbar .nav-link {
+    color: #000;
+}
+
+.navbar .nav-link:hover {
+    color: #0056b3;
+}
+
+.navbar .badge {
+    font-size: 0.75rem;
+    padding: 0.5em 0.6em;
+}
