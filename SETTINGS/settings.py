@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'app_login',
     'app_shop',
-    'app_order'
+    'app_order',
+    'app_payment'
 ]
 
 # crispy teamplate

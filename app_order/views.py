@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from app_order.models import Cart, Order
 from app_shop.models import Product
+from app_payment.models import BillingAddress
 
 @login_required
 def view_cart(request):
@@ -22,11 +23,17 @@ def remove_from_cart(request, pk):
 @login_required
 def checkout(request):
     order = Order.objects.filter(user=request.user, ordered=False).first()
+    billing_address = BillingAddress.objects.filter(user=request.user).first()
+    if not billing_address or not billing_address.is_fully_filled():
+        messages.warning(request, 'Please complete your billing address before proceeding to checkout.')
+        return redirect('add_billing_address')
+    
     if order:
         order.ordered = True
         order.save()
         messages.success(request, 'Order placed successfully!')
         return redirect('home')
+    
     messages.warning(request, 'No items in your cart to checkout')
     return redirect('view_cart')
 
