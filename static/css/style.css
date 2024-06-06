@@ -1,0 +1,44 @@
+/* style.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.messages .alert {
+    margin-top: 10px;
+}
+
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.card-text.text-muted {
+    font-size: 0.875rem;
+}
+
+.card-text.text-danger {
+    font-size: 1.5rem;
+    font-weight: bold;
+}

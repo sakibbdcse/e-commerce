@@ -1,19 +1,26 @@
-
 {% extends "base.html" %}
 
 {% block title_block %}Home{% endblock %}
 
 {% block body_block %}
-<h1>Product List</h1>
-<ul>
-    {% for product in products %}
-        <li>
-            <img src="{{ product.mainimage.url }}" alt="{{ product.name }}">
-            <h2>{{ product.name }}</h2>
-            <p>{{ product.preview_text }}</p>
-            <p>Price: {{ product.price }}</p>
-            <p>Old Price: {{ product.old_price }}</p>
-        </li>
-    {% endfor %}
-</ul>
+<div class="row">
+    <h1 class="text-center my-4">Product List</h1>
+    <div class="col-12">
+        <div class="row">
+            {% for product in object_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ product.mainimage.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.preview_text }}</p>
+                            <p class="card-text text-muted"><s>${{ product.old_price }}</s></p>
+                            <p class="card-text text-danger">${{ product.price }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
